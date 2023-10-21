@@ -90,7 +90,7 @@ void run(int thread_id, int lease, int type, int rw_ratio) {
     auto addr2 = FastRand(&bench->seed) % 64;
     auto readonly = FastRand(&bench->seed) % rw_ratio;
     bench->start();
-    if (likely(readonly != 0)) {
+    if (likely(readonly != 10000)) {
       // read only
       if (bench->read_lock(addr1, thread_id, &data1) &&
           bench->read_lock(addr2, thread_id, &data2)) {
