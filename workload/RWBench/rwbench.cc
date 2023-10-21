@@ -25,13 +25,14 @@ bool rwbench::read_unlock(int addr, int version, long long end_time,
                           int thread_id) {
   if (type == RWLOCK_TYPE::Lease) {
     // check lease
-    if (likely((end_time - start_time) <= lease)) {
-      return true;
-    }
+    // if (likely((end_time - start_time) <= lease)) {
+    //   return true;
+    // }
+    return true;
     // validate
-    if (unlikely(version != rwdata[addr].version)) {
-      return false;
-    }
+    // if (unlikely(version != rwdata[addr].version)) {
+    //   return false;
+    // }
   } else if (type == RWLOCK_TYPE::OCC) {
     // validate
     if (unlikely(version != rwdata[addr].version)) {
@@ -92,7 +93,7 @@ void run(int thread_id, int lease, int type, int rw_ratio) {
     auto addr1 = 0;
     auto addr2 = 10;
     auto readonly = 1;
-    bench->start();
+    // bench->start();
     if (likely(readonly != 10000)) {
       // read only
       if (bench->read_lock(addr1, thread_id, &data1)) {
