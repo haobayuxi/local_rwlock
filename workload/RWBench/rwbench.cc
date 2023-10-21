@@ -8,6 +8,7 @@ Node rwdata[node_num];
 
 void rwbench::start() { start_time = get_clock_sys_time_ns(); }
 
+ALWAYS_INLINE
 bool rwbench::read_lock(int addr, int thread_id, struct Node* data) {
   if (type == RWLOCK_TYPE::Lease || type == RWLOCK_TYPE::OCC) {
     memcpy(data, &rwdata[addr], sizeof(Node));
@@ -22,6 +23,7 @@ bool rwbench::read_lock(int addr, int thread_id, struct Node* data) {
   }
   return true;
 }
+ALWAYS_INLINE
 bool rwbench::read_unlock(int addr, int version, long long end_time,
                           int thread_id) {
   if (type == RWLOCK_TYPE::Lease) {
