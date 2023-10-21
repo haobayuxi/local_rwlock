@@ -11,7 +11,7 @@
 #include <string>
 #include <thread>
 
-#include "workload/RWBench/rwbench.h"
+#include "../workload/RWBench/rwbench.h"
 
 class Server {
  public:
