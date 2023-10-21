@@ -12,13 +12,5 @@
 #include <string>
 #include <thread>
 
-#include "../workload/RWBench/rwbench.h"
 #include "json_config.h"
-
-class Server {
- public:
-  void gen_threads(int thread_num);
-
- private:
-  int thread_num;
-};
+#include "rwbench/rwbench.h"
