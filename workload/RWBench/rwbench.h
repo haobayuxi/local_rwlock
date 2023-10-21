@@ -4,20 +4,17 @@
 
 #include "../common.h"
 
-struct lease_rwlock_node {
+struct Node {
   std::atomic<bool> wlock;
   int version;
   int data;
 };
 
-struct occ_node {
-  std::atomic<bool> wlock;
-  int version;
+struct prwlock {
   int data;
 };
 
-occ_node occ_data[64];
-lease_rwlock_node lease_rwlock_data[64];
+Node rwdata[64];
 
 class rwbench {
  public:
@@ -25,13 +22,14 @@ class rwbench {
     seed = 0xdeadbeef + thread_id;
     type = type;
     lease = lease;
+    thread_id = thread_id;
   }
   void start();
-  void run();
+  void run(int thread_id);
   bool readonly();
   bool readwrite();
-  bool read_lock(int addr);
-  bool read_unlock(int addr, int version, long long end_time);
+  bool read_lock(int addr, int thread_num);
+  bool read_unlock(int addr, int version, long long end_time, int thread_id);
   bool write_lock(int addr);
   bool write_unlock(int addr);
 
@@ -40,6 +38,8 @@ class rwbench {
   int type;
   long long start_time;
   int lease;
+  int thread_id;
+  int thread_num;
 };
 
 bool rwbench::readonly() {

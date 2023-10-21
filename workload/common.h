@@ -6,12 +6,12 @@
 enum RWLOCK_TYPE : int {
   Lease = 0,
   OCC = 1,
-  TwoPLSF = 2,
+  Prwlock = 2,
 };
 
 enum BENCH_TYPE : int {
   RwBench = 0,
-  BPlusTree = 1,
+  HashMap = 1,
 };
 
 #define ALWAYS_INLINE inline __attribute__((always_inline))
