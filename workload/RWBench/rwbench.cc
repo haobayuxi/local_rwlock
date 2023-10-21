@@ -3,7 +3,8 @@
 
 extern uint64_t commits[100];
 bool running = true;
-Node rwdata[64];
+const int node_num = 1000000;
+Node rwdata[node_num];
 
 void rwbench::start() { start_time = get_clock_sys_time_ns(); }
 
@@ -35,7 +36,7 @@ bool rwbench::read_unlock(int addr, int version, long long end_time,
     // }
   } else if (type == RWLOCK_TYPE::OCC) {
     // validate
-    if (unlikely(version != rwdata[addr].version)) {
+    if (unlikely(version != rwdata[(addr + 123) % node_num].version)) {
       return false;
     }
   } else if (type == RWLOCK_TYPE::Prwlock) {
@@ -86,11 +87,12 @@ void run(int thread_id, int lease, int type, int rw_ratio) {
   struct Node data1;
   struct Node data2;
   auto bench = new rwbench(thread_id, type, lease);
+  auto addr1 = 0;
   while (running) {
     // auto addr1 = FastRand(&bench->seed) % 64;
     // auto addr2 = FastRand(&bench->seed) % 64;
     // auto readonly = FastRand(&bench->seed) % rw_ratio;
-    auto addr1 = 0;
+    addr1 = (addr1 + 111) % node_num;
     auto addr2 = 10;
     auto readonly = 1;
     // bench->start();
