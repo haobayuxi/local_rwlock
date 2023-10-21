@@ -20,6 +20,6 @@ include_directories(
 )
 
 
-add_subdirectory(rapidjson)
+# add_subdirectory(rapidjson)
 add_subdirectory(workload)
 add_subdirectory(server)
