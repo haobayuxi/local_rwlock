@@ -2,6 +2,7 @@
 #include "rwbench.h"
 
 extern uint64_t commits[100];
+bool running = true;
 
 bool rwbench::read_lock(int addr, int thread_id, struct Node* data) {
   if (type == RWLOCK_TYPE::Lease || type == RWLOCK_TYPE::OCC) {
@@ -81,12 +82,12 @@ void run(int thread_id, int lease, int type, int rw_ratio) {
   struct Node data1;
   struct Node data2;
   auto bench = new rwbench(thread_id, type, lease);
-  while (true) {
+  while (running) {
     auto addr1 = FastRand(&bench->seed);
     auto addr2 = FastRand(&bench->seed);
-    auto readonly = addr1 % 2;
+    auto readonly = addr1 % rw_ratio;
     bench->start();
-    if (readonly == 1) {
+    if (likely(readonly != 0)) {
       // read only
       if (bench->read_lock(addr1, thread_id, &data1) &&
           bench->read_lock(addr2, thread_id, &data2)) {
@@ -118,7 +119,7 @@ void run(int thread_id, int lease, int type, int rw_ratio) {
 
 void run_rwbench(int thread_num, int type, int lease, int rw_ratio) {
   // init memory
-  memset(commits, 0, sizeof(uint64_t) * 100);
+  uint64_t memset(commits, 0, sizeof(uint64_t) * 100);
   uint64_t start_time = get_clock_sys_time_us();
   // gen threads
   auto thread_arr = new std::thread[thread_num];
@@ -141,9 +142,13 @@ void run_rwbench(int thread_num, int type, int lease, int rw_ratio) {
   //       thread_arr[i].join();
   //     }
   //   }
-
+  running = false;
   uint64_t end_time = get_clock_sys_time_us();
   double second = (end_time - start_time) / 1000000.0;
-  std::cout << (thread_num * times) / second << std::endl;
+  uint64_t total_commits = 0;
+  for (int i = 0; i < thread_num; i++) {
+    total_commits += commits[i];
+  }
+  std::cout << total_commits / second << std::endl;
   //
 }
