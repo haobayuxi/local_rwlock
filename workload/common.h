@@ -1,4 +1,8 @@
+#pragma once
 
+#include <time.h>
+
+#include <stdint>
 
 enum RWLOCK_TYPE : int {
   Lease = 0,
