@@ -12,8 +12,8 @@
 #include <string>
 #include <thread>
 
+#include "../workload/RWBench/rwbench.h"
 #include "json_config.h"
-#include "rwbench/rwbench.h"
 
 class Server {
  public:
