@@ -87,12 +87,12 @@ void run(int thread_id, int lease, int type, int rw_ratio) {
   struct Node data1;
   struct Node data2;
   auto bench = new rwbench(thread_id, type, lease);
-  auto addr1 = 0;
+  auto addr1 = thread_id;
   while (running) {
     // auto addr1 = FastRand(&bench->seed) % 64;
     // auto addr2 = FastRand(&bench->seed) % 64;
     // auto readonly = FastRand(&bench->seed) % rw_ratio;
-    addr1 = (addr1 + 111) % node_num;
+    addr1 = (addr1 + 1111) % node_num;
     auto addr2 = 10;
     auto readonly = 1;
     // bench->start();
