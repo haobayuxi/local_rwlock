@@ -92,7 +92,7 @@ void run(int thread_id, int lease, int type, int rw_ratio) {
     // auto addr1 = FastRand(&bench->seed) % 64;
     // auto addr2 = FastRand(&bench->seed) % 64;
     // auto readonly = FastRand(&bench->seed) % rw_ratio;
-    addr1 = (addr1 + 1111) % node_num;
+    addr1 = (addr1 + 111) % node_num;
     auto addr2 = 10;
     auto readonly = 1;
     // bench->start();
