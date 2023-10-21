@@ -25,11 +25,11 @@ struct prwlock {
 
 class rwbench {
  public:
-  rwbench(int thread_id, int type, int lease) {
+  rwbench(int _thread_id, int _type, int _lease) {
     seed = 0xdeadbeef + thread_id;
-    type = type;
-    lease = lease;
-    thread_id = thread_id;
+    type = _type;
+    lease = _lease;
+    thread_id = _thread_id;
   }
   void start();
   bool read_lock(int addr, int thread_num, struct Node* data);
