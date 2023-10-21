@@ -40,8 +40,8 @@ bool rwbench::write_lock(int addr) {
   // cas
   bool not_locked = false;
   if (type == RWLOCK_TYPE::Lease || type == RWLOCK_TYPE::OCC) {
-    auto wlock = (std::atomic<bool>)rwdata[addr].wlock;
-    while (!wlock.compare_exchange_strong(&not_locked, true)) {
+    auto wlock = (std::atomic<bool>*)&rwdata[addr].wlock;
+    while (!wlock->compare_exchange_strong(not_locked, true)) {
     }
     return true;
   } else if (type == RWLOCK_TYPE::Prwlock) {
