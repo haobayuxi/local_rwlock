@@ -86,9 +86,9 @@ void run(int thread_id, int lease, int type, int rw_ratio) {
   struct Node data2;
   auto bench = new rwbench(thread_id, type, lease);
   while (running) {
-    auto addr1 = FastRand(&bench->seed);
-    auto addr2 = FastRand(&bench->seed);
-    auto readonly = addr1 % rw_ratio;
+    auto addr1 = FastRand(&bench->seed) % 64;
+    auto addr2 = FastRand(&bench->seed) % 64;
+    auto readonly = FastRand(&bench->seed) % rw_ratio;
     bench->start();
     if (likely(readonly != 0)) {
       // read only
