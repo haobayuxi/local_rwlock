@@ -38,7 +38,7 @@ bool rwbench::read_unlock(int addr, int version, long long end_time,
     // }
   } else if (type == RWLOCK_TYPE::OCC) {
     // validate
-    if (unlikely(version != rwdata[(addr + 123) % node_num].version)) {
+    if (unlikely(version != rwdata[addr].version)) {
       return false;
     }
   } else if (type == RWLOCK_TYPE::Prwlock) {
