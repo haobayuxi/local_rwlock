@@ -22,11 +22,11 @@
 #pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
 #pragma GCC diagnostic ignored "-Winline"
 
+#include "../rapidjson/document.h"
+#include "../rapidjson/error/en.h"
+#include "../rapidjson/stringbuffer.h"
+#include "../rapidjson/writer.h"
 #include "../workload/common.h"
-#include "rapidjson/document.h"
-#include "rapidjson/error/en.h"
-#include "rapidjson/stringbuffer.h"
-#include "rapidjson/writer.h"
 
 #pragma GCC diagnostic pop
 
