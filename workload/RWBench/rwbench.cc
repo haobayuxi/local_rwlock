@@ -5,6 +5,8 @@ extern uint64_t commits[100];
 bool running = true;
 Node rwdata[64];
 
+void rwbench::start() { start_time = get_clock_sys_time_ns(); }
+
 bool rwbench::read_lock(int addr, int thread_id, struct Node* data) {
   if (type == RWLOCK_TYPE::Lease || type == RWLOCK_TYPE::OCC) {
     memcpy(data, &rwdata[addr], sizeof(Node));

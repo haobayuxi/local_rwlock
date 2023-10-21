@@ -46,8 +46,6 @@ class rwbench {
  private:
 };
 
-void rwbench::start() { start_time = get_clock_sys_time_ns(); }
-
 void run(int thread_id, int lease, int type, int rw_ratio);
 
 void run_rwbench(int thread_num, int type, int lease, int rw_ratio);
