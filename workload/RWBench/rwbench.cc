@@ -98,7 +98,8 @@ void run(int thread_id, int lease, int type, int rw_ratio) {
       if (bench->read_lock(addr1, thread_id, &data1)) {
         // && bench->read_lock(addr2, thread_id, &data2)) {
         // read data success free read lock
-        auto end_time = get_clock_sys_time_ns();
+        // auto end_time = get_clock_sys_time_ns();
+        auto end_time = 100000;
         if (bench->read_unlock(addr1, data1.version, end_time, thread_id)) {
           // && bench->read_unlock(addr2, data2.version, end_time, thread_id)) {
           // commit
