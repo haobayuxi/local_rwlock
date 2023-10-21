@@ -25,6 +25,8 @@ bool rwbench::read_unlock(int addr, int version, long long end_time,
                           int thread_id) {
   if (type == RWLOCK_TYPE::Lease) {
     // check lease
+    std::cout << "time=" << end_time - start_time << std::endl;
+    sleep(1);
     if (likely((end_time - start_time) <= lease)) {
       return true;
     }
