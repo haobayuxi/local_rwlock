@@ -53,7 +53,7 @@ void Server::gen_threads(int thread_num) {
       std::cout << "Error calling pthread_setaffinity_np: " << rc;
     }
   }
-  sleep();
+  sleep(1);
   //   for (int i = 0; i < thread_num; i++) {
   //     if (thread_arr[i].joinable()) {
   //       thread_arr[i].join();
