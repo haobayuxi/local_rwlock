@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
   int lease = (int)conf.get("lease").get_int64();
   int type = (int)conf.get("type").get_int64();
   int thread_num = (int)conf.get("thread_num").get_int64();
-  int rw_ratio = (int)conf.get("ratio").get_int64();
+  int rw_ratio = (int)conf.get("rw_ratio").get_int64();
   std::cout << "thread_num=" << thread_num << ", type=" << type
             << ", lease=" << lease << " ,rw_ratio=" << rw_ratio << std::endl;
   run_rwbench(thread_num, type, lease, rw_ratio);
