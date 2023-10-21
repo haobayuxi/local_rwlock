@@ -14,12 +14,12 @@ else()
 endif()
 
 include_directories(
-    # core
+    rapidjson
     workload
     server
 )
 
 
-
+add_subdirectory(rapidjson)
 add_subdirectory(workload)
 add_subdirectory(server)
