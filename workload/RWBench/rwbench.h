@@ -11,7 +11,7 @@
 #include <iostream>
 #include <thread>
 
-#include "../common.h"
+#include "../../common.h"
 
 struct Node {
   bool wlock;

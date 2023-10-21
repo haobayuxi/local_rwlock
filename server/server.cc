@@ -1,8 +1,6 @@
 
 #include "server.h"
 
-#include <atomic>
-
 // using namespace std;
 
 uint64_t commits[100];
