@@ -77,41 +77,73 @@ bool rwbench::write_unlock(int addr, long long* end_time) {
   return true;
 }
 
-void run(rwbench bench, int thread_id) {
-  //
+void run(int thread_id, int lease, int type, int rw_ratio) {
   struct Node data1;
   struct Node data2;
+  auto bench = new rwbench(thread_id, type, lease);
   while (true) {
-    auto addr1 = FastRand(&bench.seed);
-    auto addr2 = FastRand(&bench.seed);
+    auto addr1 = FastRand(&bench->seed);
+    auto addr2 = FastRand(&bench->seed);
     auto readonly = addr1 % 2;
-
+    bench->start();
     if (readonly == 1) {
       // read only
-      if (bench.read_lock(addr1, thread_id, &data1) &&
-          bench.read_lock(addr2, thread_id, &data2)) {
+      if (bench->read_lock(addr1, thread_id, &data1) &&
+          bench->read_lock(addr2, thread_id, &data2)) {
         // read data success free read lock
         auto end_time = get_clock_sys_time_ns();
-        if (bench.read_unlock(addr1, data1.version, end_time, thread_id) &&
-            bench.read_unlock(addr2, data2.version, end_time, thread_id)) {
+        if (bench->read_unlock(addr1, data1.version, end_time, thread_id) &&
+            bench->read_unlock(addr2, data2.version, end_time, thread_id)) {
           // commit
           commits[thread_id] += 1;
         }
 
       } else {
         // write
-        if (bench.write_lock(addr1) && bench.write_lock(addr2)) {
+        if (bench->write_lock(addr1) && bench->write_lock(addr2)) {
           // success
-          bench.start_time = get_clock_sys_time_ns();
+          bench->start_time = get_clock_sys_time_ns();
           rwdata[addr1].data += 1;
           rwdata[addr2].data -= 1;
           auto end_time = get_clock_sys_time_ns();
-          if (bench.write_unlock(addr1, &end_time) &&
-              bench.write_unlock(addr2, &end_time)) {
+          if (bench->write_unlock(addr1, &end_time) &&
+              bench->write_unlock(addr2, &end_time)) {
             commits[thread_id] += 1;
           }
         }
       }
     }
   }
+}
+
+void run_rwbench(int thread_num, int type, int lease, int rw_ratio) {
+  // init memory
+  memset(commits, 0, sizeof(uint64_t) * 100);
+  uint64_t start_time = get_clock_sys_time_us();
+  // gen threads
+  auto thread_arr = new std::thread[thread_num];
+
+  for (int i = 0; i < thread_num; i++) {
+    thread_arr[i] = std::thread(run, i, lease, type, rw_ratio);
+    /* Pin thread i to hardware thread i */
+    cpu_set_t cpuset;
+    CPU_ZERO(&cpuset);
+    CPU_SET(i, &cpuset);
+    int rc = pthread_setaffinity_np(thread_arr[i].native_handle(),
+                                    sizeof(cpu_set_t), &cpuset);
+    if (rc != 0) {
+      std::cout << "Error calling pthread_setaffinity_np: " << rc;
+    }
+  }
+  sleep(10);
+  //   for (int i = 0; i < thread_num; i++) {
+  //     if (thread_arr[i].joinable()) {
+  //       thread_arr[i].join();
+  //     }
+  //   }
+
+  uint64_t end_time = get_clock_sys_time_us();
+  double second = (end_time - start_time) / 1000000.0;
+  std::cout << (thread_num * times) / second << std::endl;
+  //
 }

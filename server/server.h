@@ -12,6 +12,7 @@
 #include <thread>
 
 #include "../workload/RWBench/rwbench.h"
+#include "json_config.h"
 
 class Server {
  public:

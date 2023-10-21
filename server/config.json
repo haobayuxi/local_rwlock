@@ -1,0 +1,8 @@
+{
+    "config": {
+        "thread_num": 32,
+        "type": 0,
+        "rw_ratio": 1000,
+        "lease": 100
+    }
+}

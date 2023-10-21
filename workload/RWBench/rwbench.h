@@ -1,6 +1,13 @@
 
+#include <pthread.h>
+#include <sched.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
+
 #include <atomic>
 #include <iostream>
+#include <thread>
 
 #include "../common.h"
 
@@ -41,4 +48,6 @@ class rwbench {
 
 void rwbench::start() { start_time = get_clock_sys_time_ns(); }
 
-void run(rwbench bench, int thread_id);
+void run(int thread_id, int lease, int type, int rw_ratio);
+
+void run_rwbench(int thread_num, int type, int lease);
