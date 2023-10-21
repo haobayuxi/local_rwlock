@@ -23,8 +23,6 @@ struct prwlock {
   int data;
 };
 
-Node rwdata[64];
-
 class rwbench {
  public:
   rwbench(int thread_id, int type, int lease) {

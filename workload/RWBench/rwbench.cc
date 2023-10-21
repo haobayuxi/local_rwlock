@@ -3,6 +3,7 @@
 
 extern uint64_t commits[100];
 bool running = true;
+Node rwdata[64];
 
 bool rwbench::read_lock(int addr, int thread_id, struct Node* data) {
   if (type == RWLOCK_TYPE::Lease || type == RWLOCK_TYPE::OCC) {
