@@ -50,9 +50,9 @@ bool rwbench::write_lock(int addr) {
 bool rwbench::write_unlock(int addr) {
   // cas
   if (type == RWLOCK_TYPE::Lease || type == RWLOCK_TYPE::OCC) {
-    if (rwdata[addr].wlock.compare_exchange_strong(false, true)) {
-      return true;
-    }
+    // if (rwdata[addr].wlock.compare_exchange_strong(false, true)) {
+    //   return true;
+    // }
   } else if (type == RWLOCK_TYPE::Prwlock) {
   }
   return true;
