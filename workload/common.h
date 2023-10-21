@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <string.h>
 #include <time.h>
 
 enum RWLOCK_TYPE : int {
