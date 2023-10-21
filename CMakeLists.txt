@@ -15,19 +15,11 @@ endif()
 
 include_directories(
     # core
-    # thirdparty
-    # workload
-    # compute_pool
-    standalone
+    workload
+    server
 )
 
-# add_subdirectory(thirdparty/rlib)
 
-# add_subdirectory(core)
 
-# add_subdirectory(workload)
-
-# add_subdirectory(compute_pool)
-
-# add_subdirectory(memory_pool)
-add_subdirectory(standalone)
+add_subdirectory(workload)
+add_subdirectory(server)
