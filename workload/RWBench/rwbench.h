@@ -25,32 +25,20 @@ class rwbench {
     thread_id = thread_id;
   }
   void start();
-  void run(int thread_id);
-  bool readonly();
-  bool readwrite();
   bool read_lock(int addr, int thread_num, struct Node* data);
   bool read_unlock(int addr, int version, long long end_time, int thread_id);
   bool write_lock(int addr);
-  bool write_unlock(int addr);
-
- private:
+  bool write_unlock(int addr, long long* end_time);
   uint64_t seed;
   int type;
   long long start_time;
   int lease;
   int thread_id;
   int thread_num;
+
+ private:
 };
 
-bool rwbench::readonly() {
-  // random two addr
-
-  return true;
-}
-
-bool rwbench::readwrite() {
-  // random two addr
-  return true;
-}
-
 void rwbench::start() { start_time = get_clock_sys_time_ns(); }
+
+void run(rwbench bench, int thread_id);
