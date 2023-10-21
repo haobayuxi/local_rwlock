@@ -12,5 +12,5 @@
 #include <string>
 #include <thread>
 
+#include "RWBench/rwbench.h"
 #include "json_config.h"
-#include "rwbench/rwbench.h"
